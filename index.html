@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="A simple and responsive task management and productivity application."
+    >
+
+    <title>TaskFlow | Task Management</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="app-container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">✓</div>
+                <h2>TaskFlow</h2>
+            </div>
+
+            <p class="sidebar-label">WORKSPACE</p>
+
+            <nav class="navigation" aria-label="Task navigation">
+                <button
+                    class="nav-item active"
+                    type="button"
+                    data-filter="all"
+                    aria-pressed="true"
+                >
+                    <span>▦</span>
+                    All Tasks
+                </button>
+
+                <button
+                    class="nav-item"
+                    type="button"
+                    data-filter="pending"
+                    aria-pressed="false"
+                >
+                    <span>◷</span>
+                    Pending
+                </button>
+
+                <button
+                    class="nav-item"
+                    type="button"
+                    data-filter="completed"
+                    aria-pressed="false"
+                >
+                    <span>✓</span>
+                    Completed
+                </button>
+
+                <button
+                    class="nav-item"
+                    type="button"
+                    data-filter="today"
+                    aria-pressed="false"
+                >
+                    <span>▣</span>
+                    Due Today
+                </button>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <p>Stay organized.</p>
+                <p>Make every day productive.</p>
+                <span>TaskFlow © 2026</span>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">YOUR PRODUCTIVITY SPACE</p>
+                    <h1>My Workspace</h1>
+                    <p class="subtitle">
+                        Plan your work. Track your progress. Get things done.
+                    </p>
+                </div>
+
+                <button
+                    id="addTaskButton"
+                    class="primary-button"
+                    type="button"
+                >
+                    <span aria-hidden="true">+</span>
+                    Add New Task
+                </button>
+            </header>
+
+            <!-- Statistics -->
+            <section
+                class="stats-grid"
+                aria-label="Task statistics"
+            >
+                <article class="stat-card">
+                    <div class="stat-icon total-icon">▦</div>
+                    <div>
+                        <p>Total Tasks</p>
+                        <h2 id="totalTasks">0</h2>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon pending-icon">◷</div>
+                    <div>
+                        <p>Pending Tasks</p>
+                        <h2 id="pendingTasks">0</h2>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon completed-icon">✓</div>
+                    <div>
+                        <p>Completed Tasks</p>
+                        <h2 id="completedTasks">0</h2>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon progress-icon">↗</div>
+                    <div>
+                        <p>Completion Rate</p>
+                        <h2 id="completionRate">0%</h2>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Task controls -->
+            <section class="tasks-section">
+
+                <div class="section-heading">
+                    <div>
+                        <h2 id="taskSectionTitle">All Tasks</h2>
+                        <p>Manage your daily activities.</p>
+                    </div>
+                </div>
+
+                <div class="task-toolbar">
+                    <label class="search-box">
+                        <span aria-hidden="true">⌕</span>
+
+                        <input
+                            id="searchInput"
+                            type="search"
+                            placeholder="Search tasks..."
+                            aria-label="Search tasks by title or description"
+                        >
+                    </label>
+
+                    <label class="filter-control">
+                        <span class="visually-hidden">
+                            Filter tasks by priority
+                        </span>
+
+                        <select id="priorityFilter">
+                            <option value="all">All Priorities</option>
+                            <option value="high">High Priority</option>
+                            <option value="medium">Medium Priority</option>
+                            <option value="low">Low Priority</option>
+                        </select>
+                    </label>
+
+                    <label class="filter-control">
+                        <span class="visually-hidden">
+                            Sort tasks
+                        </span>
+
+                        <select id="sortFilter">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="dueDate">Due Date</option>
+                            <option value="priority">Priority</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Tasks are rendered here by JavaScript -->
+                <div
+                    id="taskList"
+                    class="task-list"
+                    aria-live="polite"
+                ></div>
+
+            </section>
+
+            <footer class="page-footer">
+                <span>Built with HTML, CSS & JavaScript</span>
+                <span>Your tasks are saved in this browser.</span>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- Add/Edit Task Dialog -->
+    <dialog id="taskDialog" class="task-dialog">
+
+        <form id="taskForm">
+            <div class="dialog-header">
+                <div>
+                    <p class="eyebrow">TASK DETAILS</p>
+                    <h2 id="dialogTitle">Create a New Task</h2>
+                </div>
+
+                <button
+                    id="closeDialogButton"
+                    class="close-button"
+                    type="button"
+                    aria-label="Close dialog"
+                >
+                    &times;
+                </button>
+            </div>
+
+            <input type="hidden" id="taskId">
+
+            <div class="form-group">
+                <label for="taskTitle">Task Title *</label>
+
+                <input
+                    id="taskTitle"
+                    name="taskTitle"
+                    type="text"
+                    placeholder="e.g. Prepare for technical interview"
+                    maxlength="100"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="taskDescription">Description</label>
+
+                <textarea
+                    id="taskDescription"
+                    name="taskDescription"
+                    placeholder="Add details about your task..."
+                    rows="4"
+                    maxlength="1000"
+                ></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="taskPriority">Priority</label>
+
+                    <select id="taskPriority" name="taskPriority">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="taskDueDate">Due Date</label>
+
+                    <input
+                        id="taskDueDate"
+                        name="taskDueDate"
+                        type="date"
+                    >
+                </div>
+            </div>
+
+            <div class="dialog-actions">
+                <button
+                    id="cancelButton"
+                    class="secondary-button"
+                    type="button"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    id="saveTaskButton"
+                    class="primary-button"
+                    type="submit"
+                >
+                    Save Task
+                </button>
+            </div>
+
+        </form>
+    </dialog>
+
+    <!-- Screen-reader announcements -->
+    <div
+        id="appAnnouncement"
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+    ></div>
+
+</body>
+</html>

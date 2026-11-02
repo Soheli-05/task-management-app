@@ -1,0 +1,793 @@
+/* ==============================
+   1. Global styles
+================================ */
+
+:root {
+    --primary: #6258e8;
+    --primary-dark: #4f46c9;
+    --background: #f6f7fb;
+    --surface: #ffffff;
+    --text: #25263a;
+    --muted: #777b91;
+    --border: #e9eaf2;
+    --success: #18875b;
+    --danger: #d64545;
+    --shadow: 0 8px 30px rgba(35, 37, 70, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 3px solid rgba(98, 88, 232, 0.35);
+    outline-offset: 2px;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ==============================
+   2. Main layout
+================================ */
+
+.app-container {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 245px minmax(0, 1fr);
+}
+
+.sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 30px 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px;
+    margin-bottom: 45px;
+}
+
+.brand-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: var(--primary);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.brand h2 {
+    margin: 0;
+    font-size: 23px;
+    letter-spacing: -0.7px;
+}
+
+.sidebar-label {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.3px;
+    padding: 0 12px;
+    margin-bottom: 12px;
+}
+
+.navigation {
+    display: grid;
+    gap: 8px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #686b80;
+    border-radius: 10px;
+    text-align: left;
+    padding: 13px 14px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.nav-item span {
+    font-size: 19px;
+}
+
+.nav-item:hover {
+    background: #f5f4ff;
+    color: var(--primary);
+}
+
+.nav-item.active {
+    background: #efedff;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding: 25px 10px 0;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.sidebar-bottom p {
+    margin: 5px 0;
+}
+
+.sidebar-bottom span {
+    display: block;
+    margin-top: 24px;
+}
+
+/* ==============================
+   3. Main content and header
+================================ */
+
+.main-content {
+    min-width: 0;
+    padding: 38px 42px 20px;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.eyebrow {
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin: 0 0 8px;
+}
+
+.topbar h1 {
+    font-size: clamp(26px, 3vw, 34px);
+    letter-spacing: -1px;
+    margin: 0;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 8px 0 0;
+}
+
+/* ==============================
+   4. Buttons
+================================ */
+
+.primary-button,
+.secondary-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 11px 17px;
+    border-radius: 9px;
+    font-weight: bold;
+    font-size: 13px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.primary-button {
+    border: 1px solid var(--primary);
+    background: var(--primary);
+    color: white;
+}
+
+.primary-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.primary-button span {
+    font-size: 21px;
+    line-height: 1;
+}
+
+.secondary-button {
+    border: 1px solid var(--border);
+    background: white;
+    color: var(--text);
+}
+
+.secondary-button:hover {
+    background: #f4f4f8;
+}
+
+/* ==============================
+   5. Statistics dashboard
+================================ */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 34px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--surface);
+    padding: 23px 18px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    box-shadow: var(--shadow);
+    min-width: 0;
+}
+
+.stat-icon {
+    width: 43px;
+    height: 43px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.total-icon {
+    background: #efedff;
+    color: #6258e8;
+}
+
+.pending-icon {
+    background: #fff2dc;
+    color: #c37b12;
+}
+
+.completed-icon {
+    background: #e2f8ee;
+    color: #18875b;
+}
+
+.progress-icon {
+    background: #e6f3ff;
+    color: #2377c7;
+}
+
+.stat-card p {
+    color: var(--muted);
+    font-size: 12px;
+    margin: 0 0 6px;
+}
+
+.stat-card h2 {
+    margin: 0;
+    font-size: 25px;
+    line-height: 1.2;
+}
+
+/* ==============================
+   6. Task section
+================================ */
+
+.tasks-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 27px;
+    box-shadow: var(--shadow);
+}
+
+.section-heading {
+    margin-bottom: 23px;
+}
+
+.section-heading h2 {
+    font-size: 21px;
+    margin: 0;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 5px 0 0;
+}
+
+.task-toolbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 150px;
+    gap: 10px;
+    padding: 0 13px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--muted);
+}
+
+.search-box span {
+    font-size: 25px;
+}
+
+.search-box input {
+    width: 100%;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 12px 0;
+    color: var(--text);
+}
+
+.search-box input:focus-visible {
+    outline: none;
+}
+
+.filter-control select {
+    width: 100%;
+    min-height: 45px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: white;
+    color: #55586d;
+    font-size: 12px;
+}
+
+.task-list {
+    display: grid;
+    gap: 13px;
+}
+
+.task-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 19px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.task-card:hover {
+    border-color: #d6d2ff;
+    box-shadow: 0 5px 18px rgba(35, 37, 70, 0.04);
+}
+
+.task-checkbox {
+    width: 19px;
+    height: 19px;
+    margin-top: 4px;
+    flex-shrink: 0;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+.task-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.task-title {
+    font-size: 15px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+    margin: 0 0 7px;
+}
+
+.task-description {
+    color: var(--muted);
+    font-size: 13px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    margin: 0 0 12px;
+}
+
+.task-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.priority-badge,
+.status-badge {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.priority-high {
+    color: #bf3535;
+    background: #ffebeb;
+}
+
+.priority-medium {
+    color: #a56b08;
+    background: #fff3d8;
+}
+
+.priority-low {
+    color: #2377a7;
+    background: #e7f5ff;
+}
+
+.status-badge {
+    color: #6258e8;
+    background: #efedff;
+}
+
+.due-date {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.due-date.overdue {
+    color: var(--danger);
+    font-weight: bold;
+}
+
+.task-card.completed .task-title {
+    color: #9295a5;
+    text-decoration: line-through;
+}
+
+.task-card.completed .task-description {
+    opacity: 0.7;
+}
+
+.task-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.icon-button {
+    width: 35px;
+    height: 35px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    color: #666a7e;
+    font-size: 16px;
+}
+
+.icon-button:hover {
+    background: #f3f2ff;
+    color: var(--primary);
+}
+
+.icon-button.delete-button:hover {
+    background: #fff0f0;
+    color: var(--danger);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 45px 15px;
+    color: var(--muted);
+}
+
+.empty-icon {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.empty-state h3 {
+    color: var(--text);
+    margin: 0 0 7px;
+    font-size: 17px;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 13px;
+}
+
+/* ==============================
+   7. Task dialog
+================================ */
+
+.task-dialog {
+    width: min(520px, calc(100% - 30px));
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 27px;
+    border: none;
+    border-radius: 16px;
+    background: white;
+    color: var(--text);
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.2);
+}
+
+.task-dialog::backdrop {
+    background: rgba(26, 27, 48, 0.48);
+    backdrop-filter: blur(3px);
+}
+
+.dialog-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 24px;
+}
+
+.dialog-header h2 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.close-button {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 8px;
+    background: #f3f3f8;
+    font-size: 25px;
+    color: #55586d;
+}
+
+.form-group {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 19px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    border: 1px solid #dedfea;
+    border-radius: 8px;
+    padding: 12px;
+    background: white;
+    color: var(--text);
+    font-size: 13px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 95px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #a0a2b0;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+/* ==============================
+   8. Footer
+================================ */
+
+.page-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 25px 2px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* ==============================
+   9. Responsive design
+================================ */
+
+@media (max-width: 1150px) {
+    .main-content {
+        padding: 30px 25px 15px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stat-card {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 760px) {
+    .app-container {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        padding: 15px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+        margin-bottom: 17px;
+    }
+
+    .sidebar-label,
+    .sidebar-bottom {
+        display: none;
+    }
+
+    .navigation {
+        display: flex;
+        gap: 7px;
+        overflow-x: auto;
+        padding-bottom: 3px;
+    }
+
+    .nav-item {
+        flex: 0 0 auto;
+        width: auto;
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .nav-item span {
+        font-size: 15px;
+    }
+
+    .main-content {
+        padding: 24px 15px;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .topbar .primary-button {
+        width: 100%;
+    }
+
+    .stats-grid {
+        gap: 10px;
+    }
+
+    .stat-card {
+        gap: 10px;
+        padding: 14px 10px;
+    }
+
+    .stat-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 17px;
+    }
+
+    .stat-card p {
+        font-size: 11px;
+    }
+
+    .stat-card h2 {
+        font-size: 21px;
+    }
+
+    .tasks-section {
+        padding: 17px 12px;
+    }
+
+    .task-toolbar {
+        flex-direction: column;
+    }
+
+    .search-box {
+        flex: auto;
+    }
+
+    .task-card {
+        gap: 9px;
+        padding: 13px 9px;
+    }
+
+    .task-actions {
+        flex-direction: column;
+    }
+
+    .page-footer {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 380px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .task-dialog {
+        padding: 20px 16px;
+    }
+
+    .nav-item {
+        gap: 6px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
